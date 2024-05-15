@@ -32,6 +32,21 @@ router.get("/",async(req,res)=>{
     }
 })
 
+router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const deletedFeedback = await Feedback.findByIdAndDelete(id);
+  
+      if (!deletedFeedback) {
+        return res.status(404).json({ msg: "Feedback not found" });
+      }
+  
+      res.status(200).json({ msg: "Feedback deleted successfully", feedback: deletedFeedback });
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  });
 
 
 
